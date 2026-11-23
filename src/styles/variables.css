@@ -1,0 +1,77 @@
+/* Design tokens and CSS custom properties for Netflix Lookalike */
+:root {
+  /* Brand & Core Palette */
+  --bg-primary: #141414;
+  --bg-secondary: #1a1a1a;
+  --bg-tertiary: #222222;
+  --bg-elevated: #262626;
+  --bg-card: #1f1f1f;
+  
+  --text-primary: #ffffff;
+  --text-secondary: #b3b3b3;
+  --text-muted: #808080;
+  
+  --accent-red: #e50914;
+  --accent-red-hover: #f40612;
+  --accent-red-dark: #b81d24;
+  
+  /* Pill & Button Colors */
+  --pill-active-bg: #4a4a4a;
+  --pill-active-text: #ffffff;
+  --pill-inactive-text: #b3b3b3;
+  --pill-inactive-hover-text: #ffffff;
+  
+  --hero-btn-play-bg: #ffffff;
+  --hero-btn-play-text: #000000;
+  --hero-btn-play-hover: rgba(255, 255, 255, 0.75);
+  
+  --hero-btn-info-bg: rgba(109, 109, 110, 0.7);
+  --hero-btn-info-text: #ffffff;
+  --hero-btn-info-hover: rgba(109, 109, 110, 0.4);
+  
+  --chip-bg: rgba(22, 22, 22, 0.75);
+  --chip-border: rgba(255, 255, 255, 0.18);
+  
+  /* Layout Dimensions */
+  --nav-height: 90px;
+  --page-margin-desktop: 60px;
+  --page-margin-mobile: 16px;
+  --page-margin: var(--page-margin-desktop);
+  
+  --hero-height-desktop: 800px;
+  --hero-radius: 20px;
+  --card-radius: 12px;
+  --dropdown-radius: 16px;
+  --card-gap: 10px;
+  
+  /* Typography */
+  --font-brand: 'Bebas Neue', 'Helvetica Neue', Inter, Arial, sans-serif;
+  --font-sans: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  
+  /* Shadows */
+  --shadow-dropdown: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 1px rgba(255, 255, 255, 0.15);
+  --shadow-card-hover: 0 14px 30px rgba(0, 0, 0, 0.8), 0 0 15px rgba(0, 0, 0, 0.5);
+  --shadow-hero-inset: inset 0 0 80px rgba(0, 0, 0, 0.8);
+  
+  /* Transitions */
+  --transition-fast: 0.15s ease-in-out;
+  --transition-normal: 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+  --transition-scale: 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+  
+  /* Min Accessible Tap Target */
+  --tap-target-min: 44px;
+}
+
+@media (max-width: 900px) {
+  :root {
+    --page-margin: var(--page-margin-mobile);
+    --hero-height-desktop: 600px;
+  }
+}
+
+@media (max-width: 600px) {
+  :root {
+    --nav-height: 72px;
+    --hero-height-desktop: 520px;
+  }
+}
