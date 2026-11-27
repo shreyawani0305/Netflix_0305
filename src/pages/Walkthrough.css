@@ -276,8 +276,6 @@
   scroll-margin-top: calc(var(--nav-height) + 14px);
 }
 
-html[data-walkthrough-step="home-feature"] .hero-btn-info,
-html[data-walkthrough-step="home-details"] .modal-close-btn,
 html[data-walkthrough-step="mood-energy"] .mood-slider-card:first-child,
 html[data-walkthrough-step="mood-suspense"] .mood-slider-card:nth-child(2),
 html[data-walkthrough-step="mood-humour"] .mood-slider-card:nth-child(3),

@@ -13,30 +13,14 @@ const FEATURE_DESCRIPTIONS = {
 
 const TUTORIAL_STEPS = [
   {
-    id: 'home-feature',
+    id: 'home-screen',
     featureNumber: 1,
     featureTitle: 'Netflix Main Screen',
     route: '/home?walkthrough=1',
-    focus: 'home-feature',
-    target: '.hero-btn-info',
-    title: 'Explore a featured title',
-    instruction: 'Select More Info to open the featured title and see its details.',
-    action: 'click',
-    actionTarget: '.hero-btn-info',
-    nextOnAction: 'home-details',
-  },
-  {
-    id: 'home-details',
-    featureNumber: 1,
-    featureTitle: 'Netflix Main Screen',
-    route: '/home?walkthrough=1',
-    focus: 'home-details',
-    target: '.modal-close-btn',
-    title: 'Return to the home screen',
-    instruction: 'Close the details panel to continue exploring the prototype.',
-    action: 'click',
-    actionTarget: '.modal-close-btn',
-    nextOnAction: 'mood-energy',
+    title: 'Explore the home screen',
+    instruction: 'When you’re ready, select Start to continue to Mood DJ.',
+    buttonLabel: 'Start',
+    nextOnContinue: 'mood-energy',
   },
   {
     id: 'mood-energy',
@@ -377,7 +361,7 @@ export default function Walkthrough() {
               allow="autoplay"
             />
           </div>
-          <p className="live-demo-caption"><span>↖</span> Follow the pointer and highlight. Your actions move the tutorial forward.</p>
+          <p className="live-demo-caption"><span>↖</span> {step.target ? 'Follow the pointer and highlight. Your actions move the tutorial forward.' : 'Select Start in the guide to continue to Mood DJ.'}</p>
         </section>
       </div>
       <div className="walkthrough-progress" role="progressbar" aria-label="Tutorial progress" aria-valuenow={step.featureNumber} aria-valuemin={1} aria-valuemax={5}>
