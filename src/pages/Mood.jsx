@@ -93,6 +93,52 @@ function MoodIllustration() {
   );
 }
 
+function PopcornTransition() {
+  const popcorn = [
+    { className: 'popcorn-kernel-one', delay: '0s' },
+    { className: 'popcorn-kernel-two', delay: '.3s' },
+    { className: 'popcorn-kernel-three', delay: '.6s' },
+    { className: 'popcorn-kernel-four', delay: '.9s' },
+    { className: 'popcorn-kernel-five', delay: '1.2s' },
+    { className: 'popcorn-kernel-six', delay: '1.5s' },
+  ];
+
+  return (
+    <div className="mood-popcorn-scene" role="img" aria-label="Popcorn popping out of a striped bucket">
+      {popcorn.map(({ className, delay }) => (
+        <span className={`mood-popcorn-kernel ${className}`} style={{ '--pop-delay': delay }} key={className}>
+          <svg viewBox="0 0 36 34" aria-hidden="true">
+            <path d="M18 3c3-4 9-1 8 4 6-2 10 5 6 9 5 4 1 11-4 10 0 6-8 9-11 4-5 5-12 1-10-4-7-1-8-9-3-12-3-6 4-11 9-7 0-2 2-4 5-4Z" />
+          </svg>
+        </span>
+      ))}
+      <svg className="mood-popcorn-bucket" viewBox="0 0 280 250" aria-hidden="true">
+        <defs>
+          <clipPath id="mood-popcorn-bucket-clip">
+            <path d="M66 103h148l-17 121q-1 9-11 9H94q-10 0-11-9Z" />
+          </clipPath>
+          <linearGradient id="mood-popcorn-bucket-shade" x1="0" x2="1" y1="0" y2="0">
+            <stop offset="0" stopColor="#b30c16" />
+            <stop offset=".23" stopColor="#ed202c" />
+            <stop offset=".76" stopColor="#d91320" />
+            <stop offset="1" stopColor="#9b0911" />
+          </linearGradient>
+        </defs>
+        <ellipse cx="140" cy="229" rx="76" ry="10" fill="#0008" />
+        <path d="M66 103h148l-17 121q-1 9-11 9H94q-10 0-11-9Z" fill="#f3eee4" />
+        <g clipPath="url(#mood-popcorn-bucket-clip)">
+          <path d="M79 97h35v142H79zm70 0h35v142h-35z" fill="url(#mood-popcorn-bucket-shade)" />
+        </g>
+        <ellipse cx="140" cy="104" rx="75" ry="14" fill="#fff8e9" />
+        <ellipse cx="140" cy="102" rx="68" ry="9" fill="#f4b52f" />
+        <path d="M68 104h144" fill="none" stroke="#fff9ed" strokeWidth="5" strokeLinecap="round" />
+        <path d="M99 175h82" fill="none" stroke="#fff8ed" strokeWidth="3" opacity=".8" />
+        <path d="m105 193 35 7 35-7" fill="none" stroke="#fff8ed" strokeWidth="2" opacity=".65" />
+      </svg>
+    </div>
+  );
+}
+
 export default function Mood() {
   const [mood, setMood] = useState(() => Object.fromEntries(SLIDERS.map(({ key, initial }) => [key, initial])));
   const [familiarityLabel, setFamiliarityLabel] = useState('Familiarity');
@@ -104,8 +150,21 @@ export default function Mood() {
   const [query, setQuery] = useState('');
   const [notice, setNotice] = useState('');
   const processingTimer = useRef(null);
+  const resultsRef = useRef(null);
 
   useEffect(() => () => window.clearTimeout(processingTimer.current), []);
+
+  useEffect(() => {
+    if (!generated || processing || !resultsRef.current) return undefined;
+
+    const frame = window.requestAnimationFrame(() => {
+      resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (window.parent !== window && new URLSearchParams(window.location.search).get('walkthrough') === '1') {
+        window.parent.postMessage({ type: 'netflix-walkthrough-mood-results' }, window.location.origin);
+      }
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [generated, processing]);
 
   const recommendations = useMemo(() => MOOD_TITLES.map((title) => {
     const values = intensity(title);
@@ -201,7 +260,7 @@ export default function Mood() {
             {processing ? notice : `${notice}${generated && !query && bestPick ? ` Best match: ${bestPick.title.title} (${bestPick.match}%).` : ''}`}
           </p>
         </section>
-        <section className="mood-results" aria-labelledby="mood-results-title">
+        <section ref={resultsRef} className="mood-results" aria-labelledby="mood-results-title">
           <div className="mood-results-heading">
             <div><p className="mood-eyebrow">{generated ? 'MADE FOR YOUR MOMENT' : 'BASED ON YOUR VIBE'}</p>
               <h2 id="mood-results-title">{generated ? 'Your mood mix' : 'Popular picks for you'}</h2></div>
@@ -239,7 +298,7 @@ export default function Mood() {
         <div className={`mood-veil${processing ? ' is-visible' : ''}`} role="status" aria-live="polite"
           aria-hidden={!processing}>
           <div className="mood-veil-content">
-            <MoodIllustration />
+            <PopcornTransition />
             <p>Mixing your vibe…</p>
             <div className="mood-veil-progress" aria-hidden="true"><i /></div>
             <span>Finding the right titles for your mood</span>

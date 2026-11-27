@@ -68,7 +68,7 @@
 @keyframes mood-spin { to { transform: rotate(360deg); } }
 @keyframes mood-eq { from { height: 7px; opacity: .55; } to { height: 27px; opacity: 1; } }
 
-.mood-results { margin-top: 48px; }
+.mood-results { margin-top: 48px; scroll-margin-top: 110px; }
 .mood-results-heading { display: flex; align-items: center; gap: 15px; margin-bottom: 13px; }
 .mood-results-heading h2 { flex: 1; margin: 0; color: #f8f6ff; font-size: clamp(1.25rem, 2.2vw, 1.6rem); }
 .mood-search { display: flex; width: min(280px, 35vw); height: 42px; align-items: center; gap: 8px; padding: 0 12px; border: 1px solid #3b2e58; border-radius: 999px; background: #171123; color: #aaa; }
@@ -92,13 +92,24 @@
 .mood-veil.is-visible { pointer-events: auto; opacity: 1; -webkit-backdrop-filter: blur(16px) saturate(1.2); backdrop-filter: blur(16px) saturate(1.2); }
 .mood-veil-content { width: min(100%, 380px); text-align: center; transform: scale(.9) translateY(12px); opacity: 0; transition: transform .5s cubic-bezier(.2,.8,.2,1), opacity .4s ease; }
 .mood-veil.is-visible .mood-veil-content { transform: none; opacity: 1; }
-.mood-veil .mood-art-panel { width: 260px; min-height: 260px; margin: 0 auto 18px; }
-.mood-veil .mood-art-popcorn { left: 13%; }
-.mood-veil .mood-art-glasses { right: 12%; }
-.mood-veil .mood-art-film { left: 30%; }
-.mood-veil .mood-art-orb { animation-duration: .85s; }
-.mood-veil .mood-art-glasses { animation-delay: -.3s; }
-.mood-veil .mood-art-film { animation-delay: -.6s; }
+.mood-popcorn-scene { position: relative; width: min(100%, 300px); height: 245px; margin: 0 auto 18px; }
+.mood-popcorn-bucket { position: absolute; right: 0; bottom: 0; left: 0; width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 10px 24px #0008); }
+.mood-popcorn-kernel { --pop-x: 0px; --pop-y: -105px; --pop-rotate: 0deg; position: absolute; top: 50%; left: 50%; z-index: 1; width: 29px; height: 28px; opacity: 0; transform: translate(-50%, 0) scale(.38); animation: popcorn-pop 1.8s cubic-bezier(.2,.7,.25,1) var(--pop-delay) infinite; }
+.mood-popcorn-kernel svg { width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 2px 3px #0005); }
+.mood-popcorn-kernel path { fill: #ffe28a; stroke: #fff3c1; stroke-width: 1.5; stroke-linejoin: round; }
+.popcorn-kernel-one { --pop-x: -70px; --pop-y: -123px; --pop-rotate: -28deg; }
+.popcorn-kernel-two { --pop-x: -35px; --pop-y: -166px; --pop-rotate: 18deg; }
+.popcorn-kernel-three { --pop-x: 10px; --pop-y: -145px; --pop-rotate: -16deg; }
+.popcorn-kernel-four { --pop-x: 55px; --pop-y: -174px; --pop-rotate: 32deg; }
+.popcorn-kernel-five { --pop-x: 82px; --pop-y: -117px; --pop-rotate: -35deg; }
+.popcorn-kernel-six { --pop-x: -2px; --pop-y: -196px; --pop-rotate: 24deg; }
+@keyframes popcorn-pop {
+  0% { opacity: 0; transform: translate(-50%, 4px) scale(.35) rotate(0); }
+  13% { opacity: 1; }
+  57% { opacity: 1; transform: translate(var(--pop-x), var(--pop-y)) scale(1) rotate(var(--pop-rotate)); }
+  83% { opacity: .9; transform: translate(calc(var(--pop-x) * 1.15), calc(var(--pop-y) + 35px)) scale(.9) rotate(calc(var(--pop-rotate) * 1.5)); }
+  100% { opacity: 0; transform: translate(calc(var(--pop-x) * 1.25), calc(var(--pop-y) + 60px)) scale(.7) rotate(calc(var(--pop-rotate) * 2)); }
+}
 .mood-veil-content > p { margin: 0; color: #fff; font-size: 1.35rem; font-weight: 800; }
 .mood-veil-content > span { color: #c7b6ea; font-size: .92rem; }
 .mood-veil-progress { width: min(320px, 85%); height: 7px; margin: 16px auto 10px; overflow: hidden; border-radius: 99px; background: #ffffff26; }
@@ -124,7 +135,6 @@
   .mood-art-popcorn { left: 17%; width: 82px; height: 82px; font-size: 2rem; }
   .mood-art-glasses { right: 15%; width: 70px; height: 70px; }
   .mood-art-film { left: calc(50% - 35px); bottom: 8%; width: 66px; height: 66px; }
-  .mood-veil .mood-art-panel { min-height: 260px; }
   .mood-generate { width: 100%; max-width: 280px; min-width: 0; }
   .mood-results-heading { flex-wrap: wrap; }
   .mood-results-heading h2 { flex-basis: 100%; }
@@ -136,6 +146,6 @@
   .mood-art-orb { animation: none; }
   .mood-spinner, .mood-processing-equalizer i { animation: none; }
   .mood-veil-content, .mood-veil { transition: none; }
-  .mood-veil .mood-art-orb { animation: none; }
+  .mood-popcorn-kernel { animation: none; opacity: 1; transform: translate(var(--pop-x), var(--pop-y)); }
   .mood-veil.is-visible .mood-veil-progress i { transition: none; }
 }

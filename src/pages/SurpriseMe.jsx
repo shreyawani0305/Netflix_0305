@@ -54,9 +54,22 @@ export default function SurpriseMe() {
   const [resultFilter, setResultFilter] = useState('All');
   const [transitioning, setTransitioning] = useState(false);
   const transitionTimer = useRef(null);
+  const resultsRef = useRef(null);
   const { myList, liked } = useUserData();
 
   useEffect(() => () => window.clearTimeout(transitionTimer.current), []);
+
+  useEffect(() => {
+    if (!generatedMode || transitioning || !resultsRef.current) return undefined;
+
+    const frame = window.requestAnimationFrame(() => {
+      resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (window.parent !== window && new URLSearchParams(window.location.search).get('walkthrough') === '1') {
+        window.parent.postMessage({ type: 'netflix-walkthrough-surprise-results' }, window.location.origin);
+      }
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [generatedMode, transitioning]);
 
   const recommendations = useMemo(() => {
     const favorites = [...myList, ...liked].map((id) => titles.find((title) => title.id === id)).filter(Boolean);
@@ -178,7 +191,7 @@ export default function SurpriseMe() {
           </div>
         </section>
 
-        {generatedMode && <section className="surprise-results" aria-live="polite" aria-labelledby="surprise-results-title">
+        {generatedMode && <section ref={resultsRef} className="surprise-results" aria-live="polite" aria-labelledby="surprise-results-title">
           <div className="surprise-results-heading">
             <div><p className="surprise-eyebrow">{activeMix ? 'UNEXPECTED GENRE COLLISION' : 'YOUR NEXT OBSESSION'}</p>
               <h2 id="surprise-results-title">{activeMix ? `${activeMix.name} picks` : `${resultMode.title} picks`}</h2></div>

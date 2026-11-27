@@ -71,12 +71,11 @@ export default function Navbar() {
 
   // Active tab helper
   const isTabActive = (path) => {
-    if (path === '/') return location.pathname === '/';
     return location.pathname === path;
   };
 
-  // Navbar is solid black after scrolling > 20px, and always solid black on non-home pages
-  const isSolid = isScrolled || location.pathname !== '/';
+  // Navbar is solid black after scrolling > 20px, and always solid black off Home
+  const isSolid = isScrolled || location.pathname !== '/home';
 
   return (
     <header className={`netflix-navbar ${isSolid ? 'nav-scrolled' : 'nav-transparent'}`}>
@@ -108,16 +107,16 @@ export default function Navbar() {
           </button>
 
           {/* Red Bebas Neue Wordmark */}
-          <Link to="/" className="nav-brand-wordmark" aria-label="Netflix Home">
+          <Link to="/home" className="nav-brand-wordmark" aria-label="Netflix Home">
             NETFLIX
           </Link>
 
           {/* Desktop Navigation Tabs */}
           <nav className="nav-tabs" aria-label="Main Navigation">
             <Link
-              to="/"
-              className={`nav-tab-pill ${isTabActive('/') ? 'tab-active' : ''}`}
-              aria-current={isTabActive('/') ? 'page' : undefined}
+              to="/home"
+              className={`nav-tab-pill ${isTabActive('/home') ? 'tab-active' : ''}`}
+              aria-current={isTabActive('/home') ? 'page' : undefined}
             >
               Home
             </Link>
@@ -285,8 +284,8 @@ export default function Navbar() {
         <div className="mobile-nav-drawer" role="dialog" aria-label="Mobile Navigation">
           <div className="mobile-nav-links">
             <Link
-              to="/"
-              className={`mobile-tab-item ${isTabActive('/') ? 'tab-active' : ''}`}
+              to="/home"
+              className={`mobile-tab-item ${isTabActive('/home') ? 'tab-active' : ''}`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Home

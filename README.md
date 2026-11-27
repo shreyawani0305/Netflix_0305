@@ -4,6 +4,12 @@ A high-fidelity lookalike of the modern Netflix web user interface built with **
 
 Includes dynamic catalog generation, TMDB image integration, YouTube trailer modal playback, interactive fullscreen video player, local storage persistence for Continue Watching / My List / Likes / Trailers, and dedicated pages for **Home**, **Browse by Languages**, **Games**, **My Netflix**, and **New & Popular**.
 
+## Interactive Walkthrough
+
+The app opens on an interactive product tutorial at `/`. Select **Start walkthrough** for concise guidance beside the live prototype. A subtle pointer highlights each real control; adjust all Mood DJ sliders, choose a Surprise Me style, and try a genre collision to advance through the existing features.
+
+The original Netflix-style home screen remains available at `/home` (and from the Home navigation tab). Tutorial guidance is only enabled in its embedded walkthrough routes.
+
 ---
 
 ## 🔑 How to Get a TMDB API Key & Setup `.env`
@@ -77,7 +83,7 @@ npm run preview
 
 ## 📱 Pages Overview
 
-### 1. Home (`/`)
+### 1. Home (`/home`)
 - Inset spotlight Hero featuring **Maharaja** with TMDB backdrop, synopsis, meta line, and Play/More Info buttons wired directly to the fullscreen player and trailer modal.
 - Dynamically generated rows in order:
   - *Continue Watching* (with red-and-gray 4px progress bars)
